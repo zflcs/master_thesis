@@ -21,7 +21,7 @@
 
 ## 20250227
 
-修改了第一轮反馈意见后的大纲在[这里]([../outline.md](https://github.com/zflcs/master_thesis/blob/c619883046ad16a93969cb86051c70103f3eaaf5/outline.md))
+修改了第一轮反馈意见后的大纲在[这里](https://github.com/zflcs/master_thesis/blob/c619883046ad16a93969cb86051c70103f3eaaf5/outline.md)
 
 ## 20250226
 
