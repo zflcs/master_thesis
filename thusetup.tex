@@ -148,7 +148,12 @@
 
 % 算法
 \usepackage{algorithm}
-\usepackage{algorithmic}
+% \usepackage{algorithmic}
+\usepackage{algorithmicx} 
+\usepackage{algpseudocode} 
+\renewcommand{\algorithmicrequire}{\textbf{输入:}} 
+\renewcommand{\algorithmicensure}{\textbf{输出:}}
+\renewcommand{\algorithmiccomment}[1]{\hfill $\triangleright$ #1}
 
 % 量和单位
 \usepackage{siunitx}
