@@ -134,7 +134,7 @@ TAIC 可以与现有的进程、线程或协程任务模型进行结合，线程
 TAIC 中的硬件资源通过操作系统标识和进程标识进行区分，因此在申请使用 TAIC 的硬件资源时，需要向资源分配端口写操作系统标识 $os\_id$ 和进程标识 $pid$。在内核中使用 TAIC 时，$os\_id$ 为一个固定的数值 $OSID$（由内核在初始化时进行约定），$pid$ 为 0，因此，内核向 TAIC的资源分配接口写入 $(OSID, 0)$ 即可使用 TAIC 提供的功能。在用户态使用时，则需要通过 \verb|get_taic_handle| 系统调用，该系统调用首先向 TAIC 的资源分配端口写入 $(OSID, pid)$ 申请资源句柄，并将资源句柄对应的端口映射到用户进程的地址空间中，最终将资源句柄返回给用户态，对应的伪代码为 \ref{alg:get_taic_handler}。
 
 \floatname{algorithm}{系统调用}
-\begin{algorithm}[!ht]
+\begin{algorithm}
   \caption{get\_taic\_handler}
   \label{alg:get_taic_handler}
   \begin{algorithmic}[1]
@@ -176,7 +176,7 @@ TAIC 中的硬件资源通过操作系统标识和进程标识进行区分，因
 当两个进程中的接收方申请到 TAIC 的硬件资源 $handler$ 后，可以通过 \verb|task_enqueue(handler, task_id)| 和 \verb|task_dequeue(handler)| 进行任务调度，并且基于 TAIC 直接通信。伪代码 \ref{alg:communication} 展示了两个进程单向通信的示例。同理，双向通信只需要两个进程都注册发送和接收能力即可。
 
 \floatname{algorithm}{单向通信示例}
-\begin{algorithm}[!ht]
+\begin{algorithm}
   \caption{communication\_example}
   \label{alg:communication}
   \begin{algorithmic}[1]
@@ -220,14 +220,14 @@ TAIC 中的硬件资源通过操作系统标识和进程标识进行区分，因
 当接收方处于用户态且优先级较高时，为了减少任务的响应延时，需要初始化并使能用户态中断。在收到用户态中断时，进行重调度，伪代码如 \ref{alg:uintr} 所示。
 
 \floatname{algorithm}{用户态中断初始化}
-\begin{algorithm}[!ht]
+\begin{algorithm}
   \caption{user\_intr\_init}
   \label{alg:uintr}
   \begin{algorithmic}[1]
     \State taic\_handler
     \Function{user\_intr\_init}{}
       \State csr\_write(CSR\_UTVEC, uintr\_entry) \Comment{设置用户态中断入口}
-      \State csr\_set(CSR\_USTATUS, USTATUS\_UIE) \Comment{使能用户态中断}
+      \State csr\_set(CSR\_USTATUS, USTATUS\_UIE)
       \State csr\_set(CSR\_UIE, MIE\_USIE) \Comment{使能用户态中断}
     \EndFunction
 
